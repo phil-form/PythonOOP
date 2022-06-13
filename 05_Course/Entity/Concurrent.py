@@ -49,3 +49,8 @@ class Concurent:
 
         self.__lapTime.append(time)
 
+    def __eq__(self, __o: object) -> bool:
+        if isinstance(__o, Concurent):
+            return self.name == __o.name
+
+        return False
