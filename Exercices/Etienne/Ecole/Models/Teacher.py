@@ -2,6 +2,8 @@ from datetime import date, datetime
 from Models.Course import Course
 from Models.Person import Person
 
+############
+
 class Teacher(Person):
     def __init__(self, firstname: str, lastname: str, hireDate: date, email: str) -> None:
         super().__init__(firstname, lastname)
