@@ -69,3 +69,31 @@ class Course:
                 winner = concurrent
 
         return winner
+
+    # special methods
+
+    def __len__(self) -> int:
+        return len(self.__concurrents)
+
+    def __iter__(self):
+        self.current = 0
+        # return self.__concurrents.__init__()
+        return self
+
+    def __next__(self):
+        itr = self.current
+
+        if itr >= len(self.__concurrents):
+            raise StopIteration
+
+        self.current = itr + 1
+
+        return self.__concurrents[itr]
+
+    def __contains__(self, value):
+        return True if value in self.__concurrents else False
+
+    def __getitem__(self, key):
+        return self.__concurrents[key]
+
+    
