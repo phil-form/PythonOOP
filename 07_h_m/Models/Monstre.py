@@ -10,6 +10,8 @@ class Monstre(Personnage):
             raise ValueError()
         super().__init__(pers, bEnd, bFor, gold, cuir)
 
+    ## calcule le total des points de vie de tous les monstres
+    ## prend en paramètre un tableau de monstres
     def alives(lst) -> int:
         mm = list(lst)
         n = 0
@@ -17,6 +19,10 @@ class Monstre(Personnage):
             n += m.curV
         return n
 
+    ## sélectionne de manière aléatoire un monstre qui n'est pas encore mort
+    ## prend en paramètre un tableau de monstres
+    ## renvoie l'index dans le tableau des monstres
+    ##         -1 si tous les monstres sont morts
     def next(lst) -> int:
         mm = list(lst)
         if Monstre.alives(mm) == 0:

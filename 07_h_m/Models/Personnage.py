@@ -6,10 +6,10 @@ de6 = Des(1, 6)
 class Personnage:
     def __init__(self, pers: int, bEnr: int, bFor: int, gold: int, cuir: int):
         self.pers   = pers ## 11: humain, 12: nain, 21: loup, 22: orque, 23: dragonnet
-        self.__end  = de6.bestOf(4, 3) + bEnr
-        self.__for  = de6.bestOf(4, 3) + bFor
-        self.__pv   = self.pvSet()
-        self.__curV = self.__pv
+        self.__end  = de6.bestOf(4, 3) + bEnr   ## bEnr: bonus
+        self.__for  = de6.bestOf(4, 3) + bFor   ## bFor: bonus
+        self.__pv   = self.pvSet()              ## PV initiaux, sur base de l'endurance
+        self.__curV = self.__pv                 ## PC courant, = PV initiaux
         self.gold   = gold
         self.cuir   = cuir
 
@@ -46,16 +46,7 @@ class Personnage:
     def curV(self, v):
         self.__curV = v
 
-    def frappe(self, adv):
-        d = de4.lance() + self.__mod(self.force)
-        adv.curV -= d
-        print(f"{self.nom()} frappe {adv.nom()} avec une force de {d}: il reste {adv.curV} à {adv.nom()}")
-        if adv.curV <= 0:
-            adv.curV = 0
-            if self.pers < 20:
-                self.gold += adv.gold
-                self.cuir += adv.cuir
-    
+    ## modificateur    
     def __mod(self, car: int) -> int:
         if car < 5:
             m = -1
@@ -67,6 +58,7 @@ class Personnage:
             m = 2
         return (car + m)
 
+    ## nom d'un personnage sur base de son code
     def nom(self) -> str:
         if self.pers == 11:
             s = "Humain"
@@ -82,5 +74,17 @@ class Personnage:
             s = "???"
         return s
     
+    ## le personnage courant frappe le personnage passé en paramètre
+    def frappe(self, adv):
+        d = de4.lance() + self.__mod(self.force)    ## détermine la force des dégâts
+        adv.curV -= d                               ## décrémente les PV de l'adversaire
+        print(f"{self.nom()} frappe {adv.nom()} avec une force de {d}: il reste {adv.curV} à {adv.nom()}")
+        if adv.curV <= 0:                           ## il est mort ...
+            adv.curV = 0                            ## jamais de PV négatifs
+            if self.pers < 20:                      ## le frappeur est un héros:
+                self.gold += adv.gold               ## il récupère l'or
+                self.cuir += adv.cuir               ##   et le cuir
+
+    ## pour imprimer un personnage: nom, PV (courants), force, endurance, or, cuir
     def __str__(self) -> str:
         return f"{self.nom()}: PV: {self.curV}, force: {self.force}, endurance: {self.endur}, or: {self.gold}, cuir; {self.cuir}"
