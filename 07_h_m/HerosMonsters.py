@@ -43,9 +43,10 @@ m = Monstre.next(monstre)
 while (heros.curV > 0) and (Monstre.alives(monstre) > 0):
     if hm == 1:
         heros.frappe(monstre[m])
-        if monstre[m].curV <= 0:
-            m = Monstre.next(monstre)
-            heros.curV = heros.pv
+        if monstre[m].curV <= 0:        ## ce monstre est mort:
+            m = Monstre.next(monstre)   ## j'en choisis un autre
+            heros.curV = heros.pv       ## je restaure les points de vie du héros
+            hm = 2                      ## je donne la main au monstre, pour que le héros la récupère
     else:
         monstre[m].frappe(heros)
     hm = 3 - hm
