@@ -7,6 +7,7 @@ from Models.Orque      import Orque
 from Models.Dragonnet  import Dragonnet
 
 from Models.Des        import Des
+import os
 
 class Plateau:
     def __init__(self, nx: int, ny: int, nm: int):
@@ -85,8 +86,8 @@ class Plateau:
             y1 = self.ny - 1
 
         ## on balaye
-        for i in range(x0, x1):
-            for j in range(y0, y1):
+        for i in range(x0, x1 + 1):
+            for j in range(y0, y1 + 1):
                 if (i != x) or (j != y):        ## je ne me regarde pas moi-même ...
                     if  self.cases[j][i] >= 0:  ## -99: vide, -1: héros, 0 à ...: index d'un monstre
                         if j < y:               ## trouvé au-dessus
@@ -134,10 +135,13 @@ class Plateau:
                 elif self.cases[i][j] == -2:    ## monstre inconnu
                     l = l + '? '
                 elif self.cases[i][j] >= 0:     ## monstre
-                    if (x == j) and (y == i):   ## l'adversaire courant
+                    if True: ## for debug: true = debug, false = normal
                         s = self.mm[self.cases[i][j]].nom()
                     else:
-                        s = ' '
+                        if (x == j) and (y == i):   ## l'adversaire courant
+                            s = self.mm[self.cases[j][i]].nom()
+                        else:
+                            s = ' '
                     l = l + s[0] + ' '
             l += '|'
             t = t + l + "\n"
@@ -148,6 +152,16 @@ class Plateau:
         return t
 
 ## fin class Plateau
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# #                                         # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# #   D E B U T   D U   P R O G R A M M E   # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# #                                         # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+os.system("clear")
 
 sz = 15
 nm = 10
@@ -189,57 +203,89 @@ pl.setPers(heros)
 print("Héros:")
 print("  ", heros)
 
-print("Monstres:")
-n = 0
-for mm in pl.mm:
-    n += 1
-    print(f"  {n} ", mm)
-
 ## déplacements
-msg = ""
+msg = "" ## pour forcer un "enter" après l'affichage initial du héros
 while msg != "fin":
     s = input(msg)
     if msg != "":
         s = s[0].lower()
         d = -1
-        if (s == 'h') or (s == 'u'):
+        if (s == 'h') or (s == 'u'):                ## haut
             d = 1
-        elif (s == 'd') or (s == 'r'):
+        elif (s == 'd') or (s == 'r'):              ## droit
             d = 2
-        elif (s == 'b') or (s == 'd'):
+        elif (s == 'b') or (s == 'd'):              ## bas
             d = 3
-        elif (s == 'g') or (s == 'l'):
+        elif (s == 'g') or (s == 'l'):              ## gauche
             d = 4
         elif (s == '9'):
             msg = "fin"
-        if d > -1:
-            print(d)
+        if d > -1:                                  ## direction valable
+            x = heros.x                             ## pour l'effacer après de l'ancienne position
+            y = heros.y
+            if heros.move(d, sz, sz) > -1:          ## le déplacement était valide (pas en-dehors du plateau)
+                pl.cases[y][x] = -99                ## efface l'ancienne position du héros
+                pl.setPers(heros)                   ## le met à sa nouvelle place
+                d = pl.voisin(1, heros.x, heros.y)
+                if d > -1:                          ## il y a un monstre à côté
+                    if d == 1:                      ## au-dessus
+                        x = heros.x
+                        y = heros.y - 1
+                    elif d == 2:                    ## à droite
+                        x = heros.x + 1
+                        y = heros.y
+                    elif d == 3:                    ## en-dessous
+                        x = heros.x
+                        y = heros.y + 1
+                    elif d == 4:                    ## à gauche
+                        x = heros.x - 1
+                        y = heros.y
+
+                    m = pl.cases[y][x]              ## numéro du monstre
+                    os.system("clear")              ## redessine le plateau
+                    print(pl)
+
+                    ## bagare ...
+                    input(f"H: {heros.x}-{heros.y}, M: {x}-{y} => {m}")
+                    hm = 1 ## 1 = heros, 2 = monstre
+                    while (heros.curV > 0) and (pl.mm[m].curV > 0):   ## tant que les 2 combattants sont vivants
+                        if hm == 1:                     ## c'est au héros de frapper
+                            heros.frappe(pl.mm[m])
+                            if pl.mm[m].curV <= 0:      ## ce monstre est mort:
+                                heros.curV = heros.pv   ##      je restaure les points de vie du héros
+
+                        else:                           ## c'est au monstre de frapper
+                            pl.mm[m].frappe(heros)
+
+                        hm = 3 - hm                     ## la main passe
+
+                    if heros.curV == 0:                 ## le héros est mort: fin du jeu
+                        print("Le héros a perdu ...")
+                        msg = "fin"
+                    elif Monstre.alives(pl.mm) > 0:     ## il reste au moins un monstre en vie: on continue
+                        print("Ce monstre est vaicnu:")
+                        print(f"  {m} ", pl.mm[m])
+                        pl.cases[pl.mm[m].y][pl.mm[m].x] = -99
+                        input("")
+                    else:                               ## tous les monstres sont morts: fin de partie
+                        print("Le héros a gagné !!!" )
+                        pl.cases[pl.mm[m].y][pl.mm[m].x] = -99
+                        msg = "fin"
+
     if msg != "fin":
         msg = "\n[H]aut   / [U]p\n[D]roit  / [R]ight\n[B]as    / [B]ottom\n[G]auche / [L]eft\n\n 9 pour sortir\n\n   Votre choix: "
+    os.system("clear")
     print(pl)
 
-## combat(s)
-hm = 1 ## 1 = heros, 2 = monstre
-m = Monstre.next(pl.mm)   ## je choisis 1 monstre au hasard parmi les 10
-while (heros.curV > 0) and (Monstre.alives(pl.mm) > 0):   ## tant que le héros est vivant
-                                                          ## et qu'il reste au moins 1 PV à l'ensemble de tous les mosntres 
-    if hm == 1:                     ## c'est au héros de frapper
-        heros.frappe(pl.mm[m])
-        if pl.mm[m].curV <= 0:      ## ce monstre est mort:
-            m = Monstre.next(pl.mm) ##      j'en choisis un autre
-            heros.curV = heros.pv   ##      je restaure les points de vie du héros
-            hm = 2                  ##      je donne la main au monstre, pour que le héros la récupère
-
-    else:                           ## c'est au monstre de frapper
-        pl.mm[m].frappe(heros)
-
-    hm = 3 - hm                     ## la main passe
-
 ## combat terminé
-if heros.curV == 0:
+os.system("clear")
+print(pl)
+print("")
+if heros.curV == 0:                 ## le héros est mort: fin du jeu
     print("Le héros a perdu ...")
-else:
-    print("Le héros a gagné !!!")
+else:                               ## tous les monstres sont morts: fin de partie
+    print("Le héros a gagné !!!" )
+print("")
 print("Héros:")
 print("  ", heros)
 print("Monstres:")

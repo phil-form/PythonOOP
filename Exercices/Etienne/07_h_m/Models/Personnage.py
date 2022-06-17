@@ -103,6 +103,30 @@ class Personnage:
                 self.gold += adv.gold               ## il récupère l'or
                 self.cuir += adv.cuir               ##   et le cuir
 
+    ## effectue un déplacement, si possible
+    def move(self, d: int, nx : int, ny : int):
+        if d == 1:      ## up
+            if self.y == 0:
+                return -1
+            self.y -= 1
+        elif d == 2:    ## right
+            if self.x == (nx - 1):
+                return -1
+            self.x += 1
+        elif d == 3:    ## down
+            if self.y == (ny - 1):
+                return -1
+            self.y += 1
+        elif d == 4:    ## left
+            if self.x == 0:
+                return -1
+            self.x -= 1
+        else:
+            raise ValueError()
+            return -1
+        
+        return d
+           
     ## pour imprimer un personnage: nom, PV (courants), force, endurance, or, cuir
     def __str__(self) -> str:
         return f"{self.nom()} ({self.pers}): PV: {self.curV}, force: {self.force}, endurance: {self.endur}, or: {self.gold}, cuir; {self.cuir} ({self.x},{self.y})"
