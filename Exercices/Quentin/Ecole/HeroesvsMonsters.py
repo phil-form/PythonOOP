@@ -2,27 +2,25 @@ from abc import ABC, abstractmethod
 from random import randint
 
 
-class Characters(Dice) :
-    def __init__(For,End, PV, race):
-        super().__init__()
-        self.__Force = For
-        self.__Endurance = End
-        self.__PointdeVies= PV
-        self.__Races = race
+class Characters() :
+    def __init__():
+        self.__Force = self.ForceEnd()
+        self.__Endurance = self.ForceEnd()
+        self.__PointdeVies= self.PointdeVies()
+
 
     @property
     def Force (self):
         return self.__Force
-    
+
     def ForceEnd (self):
         tab =[]
         for i in range(0,3):
-          tab.append(Lance(mini,maxi))
+          tab.append(Dice.Lance(6))
         tab.sort()
         del tab[0]
-        EndFor = sum(tab)
-        self.__Force = EndFor
-        self.__Endurance = EndFor
+        return sum(tab)        
+    
 
     @property
     def Endurance(self):
@@ -33,30 +31,54 @@ class Characters(Dice) :
         return self.__PointdeVies
 
     @PointdeVies.setter
-    def PointdeVies(self, value):
-        self.__PointdeVies = Value
-
-    @property
-    def Races(self):
-        return self.__Races
-
-    @Races.setter
-    def Races(self,Value):
-        self.__Races = Value
+    def PointdeVies(self):
+        pdv = self.__Endurance
+        if pdv < 5 :
+            self.__PointdeVies = pdv -1
+        elif pdv < 10 and pdv > 15:
+            self.__PointdeVies = pdv + 1
+        elif pdv > 15 :
+            self.__PointdeVies = pdv + 2
+        
 
     def frappe():
-        return Lance()
+        dega = 0
+        forc = self.__Force
+        result = Dice.Lance(4)
+        score = forc + result
+        if score < 5 :
+            dega = score - 1
+        elif pdv < 10 and pdv > 15:
+            dega = score + 1
+        elif pdv > 15 :
+            dega = score + 2
+        
 
 
-class Humain() :
-    pass
+class Humain(Characters) :
+
+    @property
+    def Endurance(self):
+        return super().Endurance + 1
+    
+    @property
+    def Force(self):
+        return super().Force + 1
+
+
+class Nain(Characters):
+
+    @property
+    def Endurance(sel):
+        return super().Endurance + 2
+    
 
 class Monsters() :
     pass
 
 class Dice() :
 
-    def __init__(Maxi):
+    def __init__(self):
         self.__Min = 1
         self.__Max = Maxi
         
