@@ -42,11 +42,11 @@ class Character():
 
         
     def __modifier(self, prop):
-        if (prop < 5):
+        if prop < 5:
             return -1
-        elif (prop < 10):
+        elif prop < 10:
             return 0
-        elif (prop < 15):
+        elif prop < 15:
             return 1
         else:
             return 2

@@ -4,6 +4,9 @@ from Wolf import Wolf
 from Dragon import Dragon
 from Goblin import Goblin
 
+from Board import Board
+from Game import Game
+
 
 human = Human()
 dwarf = Dwarf()
@@ -17,3 +20,7 @@ print(f'Dwarf force: {dwarf.force}')
 print(f'Wolf ressource: gold: {wolf.gold}, leather: {wolf.leather}')
 print(f'Dragon ressource: gold: {dragon.gold}, leather: {dragon.leather}')
 print(f'Goblin ressource: gold: {goblin.gold}, leather: {goblin.leather}')
+
+board = Board()
+board.addMonsters(10)
+board.showMap()
