@@ -6,6 +6,21 @@
 
     <body>
         <h1>{{ person.first_name }} {{ person.last_name }}</h1>
-        <p>Age: {{ person.age }}</p>
+        <p> {{ person.descr }}</p>
+        <img src="static/img_picsou.png" alt="Picsou" width="200" height="250">
+        <h2>Mon experience</h2>
+        {%for i in range(0, len_exps)%}
+            <p>{{ person.experiences[i]["time"] }}</p>
+            <p>&emsp;{{ person.experiences[i]["descr"] }}</p>
+            
+        {%endfor%}
+        <h2>Mes competences</h2>
+        <ul>
+            {%for i in range(0, len_skills)%}
+            <li>{{ person.skills[i] }}</li>
+            {%endfor%}
+        </ul>
+        <h2>Ma formation</h2>
+        <p>{{ person.training }}</p>
     </body>
 </html>
