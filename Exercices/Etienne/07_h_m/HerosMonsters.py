@@ -89,15 +89,16 @@ class Plateau:
         for i in range(x0, x1 + 1):
             for j in range(y0, y1 + 1):
                 if (i != x) or (j != y):        ## je ne me regarde pas moi-même ...
-                    if  self.cases[j][i] >= 0:  ## -99: vide, -1: héros, 0 à ...: index d'un monstre
-                        if j < y:               ## trouvé au-dessus
-                            return 1
-                        elif i > x:             ## trouvé à droite
-                            return 2
-                        elif j > y:             ## trouvé en-dessous
-                            return 3
-                        elif i < x:             ## trouvé à gauche
-                            return 4
+                    if (d > 1) or ((d == 1) and ((i == x) or (y == j))):
+                        if  self.cases[j][i] >= 0:  ## -99: vide, -1: héros, 0 à ...: index d'un monstre
+                            if j < y:               ## trouvé au-dessus
+                                return 1
+                            elif i > x:             ## trouvé à droite
+                                return 2
+                            elif j > y:             ## trouvé en-dessous
+                                return 3
+                            elif i < x:             ## trouvé à gauche
+                                return 4
         return -1                               ## aucun voisin trouvé
     ## fin fonction voisin
 
@@ -135,11 +136,11 @@ class Plateau:
                 elif self.cases[i][j] == -2:    ## monstre inconnu
                     l = l + '? '
                 elif self.cases[i][j] >= 0:     ## monstre
-                    if True: ## for debug: true = debug, false = normal
+                    if False: ## for debug: true = debug (always show all monsters), false = normal (show only current)
                         s = self.mm[self.cases[i][j]].nom()
                     else:
                         if (x == j) and (y == i):   ## l'adversaire courant
-                            s = self.mm[self.cases[j][i]].nom()
+                            s = self.mm[self.cases[i][j]].nom()
                         else:
                             s = ' '
                     l = l + s[0] + ' '
@@ -165,6 +166,7 @@ os.system("clear")
 
 sz = 15
 nm = 10
+mv = 10
 pl = Plateau(sz, sz, nm)
 
 ## choix des 10 monstres
@@ -242,6 +244,7 @@ while msg != "fin":
                         y = heros.y
 
                     m = pl.cases[y][x]              ## numéro du monstre
+                    pl.adv = m
                     os.system("clear")              ## redessine le plateau
                     print(pl)
 
@@ -260,15 +263,18 @@ while msg != "fin":
                         hm = 3 - hm                     ## la main passe
 
                     if heros.curV == 0:                 ## le héros est mort: fin du jeu
-                        print("Le héros a perdu ...")
+                        input("Le héros a perdu ...")
                         msg = "fin"
                     elif Monstre.alives(pl.mm) > 0:     ## il reste au moins un monstre en vie: on continue
                         print("Ce monstre est vaicnu:")
                         print(f"  {m} ", pl.mm[m])
+                        mv -= 1
+                        print(f"Il reste {mv} monstre(s) à combattre")
                         pl.cases[pl.mm[m].y][pl.mm[m].x] = -99
+                        pl.adv = -1
                         input("")
                     else:                               ## tous les monstres sont morts: fin de partie
-                        print("Le héros a gagné !!!" )
+                        input("Le héros a gagné !!!" )
                         pl.cases[pl.mm[m].y][pl.mm[m].x] = -99
                         msg = "fin"
 
