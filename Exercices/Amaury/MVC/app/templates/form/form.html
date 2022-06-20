@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Amaury MVC</title>
+    </head>
+
+    <body>
+        <h1>Who are you ?</h1>
+    </body>
+
+    <form id="person" method="post">
+        <input type="text" name="firstname" placeholder="firstname" required>
+        <input type="text" name="lastname" placeholder="lastname" required>
+
+        <input type="submit" value="Send">
+    </form>
+    <br>
+    <p>you are: {{ res }}</p>
+</html>
