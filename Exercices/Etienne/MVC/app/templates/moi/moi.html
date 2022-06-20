@@ -25,14 +25,14 @@
             <h2>Connaissance:</h2>
             <ul>
                 {% for s in personne.skills %}
-                    <li>{{ s.txt }}</li>
+                    <li>{{ s }}</li>
                 {% endfor %}
             </ul>
         </div>
         <div>
             <h2>Formation:</h2>
             {% for s in personne.formations %}
-                <p>{{ s.txt }}</p>
+                <p>{{ s }}</p>
             {% endfor %}
         </div>
     </body>
