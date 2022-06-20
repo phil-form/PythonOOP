@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Premier MVC</title>
+    </head>
+
+    <body>
+        <div>
+            <h1>{{ personne.nom }} {{ personne.prenom }}</h1>
+            <p>
+                {{ personne.fonction }}
+            </p>
+            <img src="{{ url_for('static', filename='images/etan-2022.jpg') }}" width="200" height="250" />
+        </div>
+        <div>
+            <h2>Expérience:</h2>
+            <dl>
+                {% for e in personne.experiences %}
+                    <dt>{{ e.date }}</dt>
+                    <dt>{{ e.nom }}</dt>
+                {% endfor %}
+            </dl>
+        </div>
+        <div>
+            <h2>Connaissance:</h2>
+            <ul>
+                {% for s in personne.skills %}
+                    <li>{{ s }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h2>Formation:</h2>
+            {% for s in personne.formations %}
+                <p>{{ s }}</p>
+            {% endfor %}
+        </div>
+    </body>
+</html>
