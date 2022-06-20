@@ -9,3 +9,7 @@ class AmauryController:
     @app.route('/amaury')
     def exampleExample():
         return render_template('amaury/amauryBis.html', example="AMAURY")
+
+    @app.route('/CV')
+    def cv():
+        return render_template('amaury/amauryCV.html', name = "Crenier Amaury")
