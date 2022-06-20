@@ -3,7 +3,7 @@ from flask import render_template
 from app.models.Person import Person
 
 
-class ExampleController:
+class PersonController:
     @app.route('/person')
     def person():
         person = Person("Balthazar", "Picsou")
@@ -15,5 +15,10 @@ class ExampleController:
         person.addSkill("C#")
         person.addSkill("Javascript")
         person.addSkill("Base de données")
-        person.training = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas consectetur iaculis ante non mollis. Phasellus varius condimentum justo eu volutpat. Donec dapibus est velit, vitae cursus nisl cursus vel. Pellentesque eget accumsan tellus, et fringilla tellus. Nulla facilisi."
-        return render_template('person/person.html', person=person, len_exps=len(person.experiences), len_skills=len(person.skills))
+        person.training = """Lorem ipsum dolor sit amet, consectetur adipiscing 
+        elit. Maecenas consectetur iaculis ante non mollis.
+        Phasellus varius condimentum justo eu volutpat.
+        Donec dapibus est velit, vitae cursus nisl cursus vel.
+        Pellentesque eget accumsan tellus, et fringilla tellus.
+        Nulla facilisi."""
+        return render_template('person/person.html', person=person)

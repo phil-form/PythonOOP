@@ -9,15 +9,15 @@
         <p> {{ person.descr }}</p>
         <img src="static/img_picsou.png" alt="Picsou" width="200" height="250">
         <h2>Mon experience</h2>
-        {%for i in range(0, len_exps)%}
-            <p>{{ person.experiences[i]["time"] }}</p>
-            <p>&emsp;{{ person.experiences[i]["descr"] }}</p>
+        {%for exp in person.experiences%}
+            <p>{{ exp["time"] }}</p>
+            <p>&emsp;{{ exp["descr"] }}</p>
             
         {%endfor%}
         <h2>Mes competences</h2>
         <ul>
-            {%for i in range(0, len_skills)%}
-            <li>{{ person.skills[i] }}</li>
+            {%for skill in person.skills%}
+            <li>{{ skill }}</li>
             {%endfor%}
         </ul>
         <h2>Ma formation</h2>
