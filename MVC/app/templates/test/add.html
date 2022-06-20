@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>First MVC</title>
+    </head>
+
+    <body>
+        <h1>This is a beautiful page!!! {{ example }}</h1>
+        
+        <form id="contact" method="post">
+            <input type="text" name="testid" placeholder="id" required>
+            <input type="text" name="testtext" placeholder="text" required>
+    
+            <input type="submit" value="Send">
+        </form>
+        {% if errors %}
+            {% for key, val in errors.items() %}
+                {{ key }} {{ val }}
+            {% endfor %}
+        {% endif %}
+    </body>
+</html>
