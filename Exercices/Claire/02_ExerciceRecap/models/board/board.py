@@ -8,6 +8,7 @@ class Board:
         self.__size_y = size_y
         self.__hero = None
         self.__monsters = []
+        self.__usedCoords = []
 
     @property
     def sizeX(self):
@@ -34,19 +35,36 @@ class Board:
         self.__hero = value
 
     def generateCoords(self) -> Coord :
-        return Coord(randint(0, self.sizeX-1), randint(0, self.sizeY-1))
+        found = False
+        tries = 0
+        while not found and tries <= 100: # stops after 100 tries to position
+            posX = randint(0, self.sizeX-1)
+            posY = randint(0, self.sizeY-1)
+            coord = Coord(posX, posY)
+            if len(self.__usedCoords) <= 0:
+                self.__usedCoords.append(coord)
+                return coord
+            found = True
+            for char in self.__usedCoords:
+                if (abs(char.x - posX) >= 0 and abs(char.x - posX) <= 2) and (abs(char.y - posY) >= 0 and abs(char.y - posY) <= 2):
+                    found = False
+            if not found:
+                tries += 1
+            else :
+                self.__usedCoords.append(coord)
+                return coord
 
     def moveUp(self, char) -> bool:
-        newY = char.posY + 1
-        if newY > self.sizeY:
+        newY = char.posY - 1
+        if newY < 0:
             return False
         else:
             char.posY = newY
             return True
 
     def moveDown(self, char) -> bool:
-        newY = char.posY - 1
-        if newY < 0:
+        newY = char.posY + 1
+        if newY > self.sizeY:
             return False
         else:
             char.posY = newY
@@ -83,7 +101,7 @@ class Board:
 
     def __str__(self):
         res = ""
-        for y in range(self.sizeY-1, 0, -1):
+        for y in range(self.sizeY):
             res += "\n"
             for x in range(self.sizeX):
                 m = self.monstersAtPos(x, y)
