@@ -10,7 +10,7 @@
             <p>
                 {{ personne.fonction }}
             </p>
-            <img src="{{ url_for('static', filename='images/etan-2022.jpg') }}" width="200" height="250" />"
+            <img src="{{ url_for('static', filename='images/etan-2022.jpg') }}" width="200" height="250" />
         </div>
         <div>
             <h2>Expérience:</h2>
@@ -20,6 +20,20 @@
                     <dt>{{ e.nom }}</dt>
                 {% endfor %}
             </dl>
+        </div>
+        <div>
+            <h2>Connaissance:</h2>
+            <ul>
+                {% for s in personne.skills %}
+                    <li>{{ s.txt }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h2>Formation:</h2>
+            {% for s in personne.formations %}
+                <p>{{ s.txt }}</p>
+            {% endfor %}
         </div>
     </body>
 </html>

@@ -16,4 +16,4 @@ class MyController:
 
         je.addFormation("Paul Lambin")
 
-        return render_template('moi/moi.html')
+        return render_template('moi/moi.html', personne = je)

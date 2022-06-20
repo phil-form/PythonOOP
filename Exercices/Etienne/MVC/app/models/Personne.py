@@ -1,7 +1,7 @@
 class Experience:
     def __init__(self, date, nom) -> None:
         self.date = date
-        self.name = nom
+        self.nom  = nom
 
 class Personne:
     def __init__(self, prenom, nom, fonction) -> None:
@@ -10,7 +10,7 @@ class Personne:
         self.fonction    = fonction
         self.experiences = []
         self.skills      = []
-        self.formation   = []
+        self.formations  = []
 
     def addExperience(self, date, nom):
         self.experiences.append(Experience(date, nom))
@@ -19,4 +19,4 @@ class Personne:
         self.skills.append(txt)
 
     def addFormation(self, txt):
-        self.formation.append(txt)
+        self.formations.append(txt)
