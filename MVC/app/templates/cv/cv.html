@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CV</title>
+    </head>
+    <body>
+        <div>
+            <h1>{{ person.firstname }} {{ person.lastname }}</h1>
+            <p>{{ person.title }}</p>
+
+            <img src="{{ url_for('static', filename='img/picsou.png') }}">
+        </div>
+
+        <div>
+            <h2>Expérience :</h2>
+            <dl>
+                {% for exp in person.experiences %}
+                    <dt>{{ exp.date }}</dt>
+                    <dd>{{ exp.name }}</dd>
+                {% endfor %}
+            </dl>
+
+            <div>
+                <h2>Compétences :</h2>
+                <ul>
+                    {% for skill in person.skills %}
+                        <li>{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div>
+                <h2>Formation</h2>
+                {% for formation in person.formation %}
+                    <p> {{ formation }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>
