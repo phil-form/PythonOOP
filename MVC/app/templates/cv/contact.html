@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>First MVC</title>
+    </head>
+
+    <body>
+        <h1>Contact</h1>
+    </body>
+
+    <form id="contact" method="post">
+        <input type="text" name="email" placeholder="email" required>
+        <input type="text" name="text" placeholder="text">
+
+        <input type="submit" value="Send">
+    </form>
+
+    {% if contact %}
+        {{ contact }}
+    {% endif %}
+
+    {% if errors %}
+        {% for key, val in errors.items() %}
+            {{ key }} {{ val }}
+        {% endfor %}
+    {% endif %}
+</html>

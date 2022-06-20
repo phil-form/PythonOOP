@@ -1,5 +1,7 @@
 from app import app
-from flask import render_template
+from flask import render_template, request
+from app.forms.ContactForm import ContactForm
+from app.models.Contact import Contact
 
 from app.models.Person import Person
 
@@ -26,3 +28,16 @@ class CvController:
         picsou.addFormation("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt in reiciendis illum architecto voluptates, blanditiis neque, labore earum? Nihil libero illum distinctio cupiditate consequuntur quis vitae unde amet excepturi labore.")
 
         return render_template('cv/cv.html', person = picsou)
+
+    @app.route('/cv/contact', methods=["GET"])
+    def contactPage():
+        return render_template('cv/contact.html')
+
+    @app.route('/cv/contact', methods=["POST"])
+    def contactPost():
+        form = ContactForm(request.form)
+        if form.validate():
+            contact = Contact(form.email.data, form.text.data)
+            return render_template('cv/contact.html', contact = contact)
+
+        return render_template('cv/contact.html', errors = form.errors)
