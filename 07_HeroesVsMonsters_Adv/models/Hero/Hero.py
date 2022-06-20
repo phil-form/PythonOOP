@@ -26,10 +26,6 @@ class Hero(Character, IGold, ILeather):
     def killCount(self, value):
         self.__killCount = value
 
-    @property
-    def maxHealth(self):
-        return self.stamina + Generator.getModif(self.stamina) + 2000
-
     def getGold(self):
         return self.__gold
 
