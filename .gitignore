@@ -1,1 +1,3 @@
 .vscode/*
+backupDB/*
+!.gitkeep
