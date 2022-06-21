@@ -3,7 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 import psycopg2
 
 app = Flask("app")
-app.config['SECRET_KEY'] = 'random'
+app.config['SECRET_KEY'] = "Rg@O<z7Jd$C%j;C,aKD?O`8fwC(1$'E~"
 app.debug = True
 
 toolbar = DebugToolbarExtension(app)
