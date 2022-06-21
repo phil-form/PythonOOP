@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>First MVC</title>
+    </head>
+
+    <body>
+        <h1>This is a beautiful page!!! {{ example }}</h1>
+        
+        <form id="contact" method="post" action="http://127.0.0.1:8080/transfer/add">
+            <input type="text" name="fromaccount" placeholder="fromaccount" required>
+            <input type="text" name="toaccount" placeholder="toaccount" required>
+            <input type="text" name="amount" placeholder="amount" required>
+    
+            <input type="submit" value="Send">
+        </form>
+        {% if errors %}
+            {% for key, val in errors.items() %}
+                {{ key }} {{ val }}
+            {% endfor %}
+        {% endif %}
+    </body>
+</html>
