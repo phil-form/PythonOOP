@@ -19,6 +19,14 @@ class ExampleController:
         test = testService.findOne(testid)
         return render_template('test/info.html', test=test)
 
+    @app.route('/test/by/name', methods=['GET'])
+    def getOneByName():
+        testtext = request.args.get('testtext')
+        test = None
+        if testtext != None:
+            test = testService.findOneBy(testtext = testtext)
+        return render_template('test/search.html', test=test)
+
     @app.route('/test/add', methods=['GET', 'POST'])
     def postTest():
         form = TestForm(request.form)
@@ -26,8 +34,8 @@ class ExampleController:
         if request.method == 'POST':
             if form.validate():
                 test = testService.insert(form)
-                return render_template('test/info.html', test=test)
+                return render_template('test/info.html', form=form, test=test)
             
-            return render_template('test/add.html', errors=form.errors)
+            return render_template('test/add.html', form=form, errors=form.errors)
 
-        return render_template('test/add.html', example="POST")
+        return render_template('test/add.html', example="POST", form=form)

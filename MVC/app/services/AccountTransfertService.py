@@ -18,7 +18,8 @@ class AccountTransfertService:
     def findOne(self, transferid):
         cur = conn.cursor()
         cur.execute(f"SELECT * FROM accounttransfer WHERE transferid = {transferid};")
-        testData = cur.fetchone()        
+        testData = cur.fetchone()
+        conn.commit()
 
         return AccountTransfer(testData[0], testData[1], testData[2], testData[3])
 
