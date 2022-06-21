@@ -1,25 +1,30 @@
 from app import app
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from app.forms.ContactForm import ContactForm
+from app.services.ContactService import ContactService
+
+contactService = ContactService()
 
 
 class ContactController:
 
-    @app.route('/contact', methods=['GET'])
-    def contactForm():
-        # if request.method == 'POST':
-        return render_template('contact/contactForm.html', contact="GET")
+    @app.route('/contacts', methods=['GET'])
+    def getAllContacts():
+        contacts = contactService.findAll()
+        return render_template('contact/contactList.html', contacts=contacts)
 
-    @app.route('/contact', methods=['POST'])
-    def contactPostForm():
+    # @app.route('/test/<int:testid>', methods=['GET'])
+    # def getOneTests(testid):
+    #     test = testService.findOne(testid)
+    #     return render_template('test/info.html', test=test)
+
+    @app.route('/contacts/add', methods=['GET', 'POST'])
+    def insertContact():
         form = ContactForm(request.form)
 
-        if form.validate():
-            contact = {}
-            contact["first_name"] = form.first_name.data
-            contact["last_name"] = form.last_name.data
-            contact["email"] = form.email.data
-            contact["descr"] = form.descr.data
-            return render_template('contact/contactDone.html', contact=contact)
+        if request.method == 'POST':
+            if form.validate():
+                contactService.insert(form)
+                return redirect(url_for('getAllContacts'))
 
-        return render_template('contact/contactForm.html', error=True)
+        return render_template('contact/contactForm.html', errors=form.errors)
