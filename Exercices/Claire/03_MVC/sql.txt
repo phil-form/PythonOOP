@@ -7,3 +7,5 @@ CREATE TABLE contacts ( contactID SERIAL NOT NULL,
                         email varchar(255) NOT NULL, 
                         PRIMARY KEY(contactID)
 );
+SELECT * FROM contacts;
+INSERT INTO contacts(firstName, lastName, email) VALUES ('Claire', 'Bretton', 'clbr@odoo.com');

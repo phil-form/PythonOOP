@@ -8,7 +8,6 @@ app.debug = True
 
 toolbar = DebugToolbarExtension(app)
 
-conn = psycopg2.connect(dbname='technobelapp', user='postgres', password='postgres', host='127.0.0.1', port='5432')
-print(conn)
+conn = psycopg2.connect(dbname='app', user='app', password='1234', host='127.0.0.1', port='5435')
 
 from app.controllers import *

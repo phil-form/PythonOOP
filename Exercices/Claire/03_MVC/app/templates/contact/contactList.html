@@ -6,6 +6,7 @@
 
     <body>
         <h1>All contacts: </h1>
+        <button href="{{ url_for('insertContact') }}">New contact</button>
         <ul>
             {% for contact in contacts %}
             <li>{{ contact }}</li>
