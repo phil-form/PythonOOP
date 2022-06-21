@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_debugtoolbar import DebugToolbarExtension
 import psycopg2
 
