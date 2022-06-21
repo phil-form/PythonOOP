@@ -6,14 +6,13 @@
 
     <body>
         <h1>Contact us !</h1>
-        {% if error %}
-        <p>Invalid data !</p>
+        {% if errors %}
+        <p>{{ errors }}</p>
         {% endif %}
         <form id="contact" method="post">
             <input type="text" name="first_name" placeholder="firstname" required>
             <input type="text" name="last_name" placeholder="lastname" required>
             <input type="text" name="email" placeholder="email" required>
-            <input type="text" name="descr" placeholder="description">
             <input type="submit" value="Send">
         </form>
     </body>
