@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Amaury MVC</title>
+    </head>
+
+    <body>
+        {% for data in datas %}
+        <div>
+            <a href="/db/{{ data.id }}">{{ data.text }}</a>
+        </div>
+        {% endfor %}
+    </body>
+</html>
