@@ -37,7 +37,7 @@ class TestService:
                 values.append(str(val))
 
             cur.execute(query, tuple(values))
-            testData = cur.fetchone()        
+            testData = cur.fetchone()
 
             if cur.rowcount == 1:
                 return Test(testData[0], testData[1])

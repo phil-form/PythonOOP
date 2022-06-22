@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Search</title>
+    </head>
+
+    <body>
+        <h1>Search by username: </h1>
+        <form id="user" method="post">
+            {{ form.csrf_token }}
+            <input type="text" name="username" placeholder="username" required>
+            <input type="submit" value="Search">
+        </form>
+        {% if user %}
+        <p>User found !</p>
+        <p>{{ user.username }} [{{ user.email }}]</p>
+        {% endif %}
+
+    </body>
+
+</html>

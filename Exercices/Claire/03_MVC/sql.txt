@@ -1,0 +1,11 @@
+CREATE DATABASE technobelapp;
+\c technobelapp 
+ALTER USER postgres PASSWORD 'postgres';
+CREATE TABLE contacts ( contactID SERIAL NOT NULL, 
+                        firstName varchar(55) NOT NULL, 
+                        lastName varchar(55) NOT NULL, 
+                        email varchar(255) NOT NULL, 
+                        PRIMARY KEY(contactID)
+);
+SELECT * FROM contacts;
+INSERT INTO contacts(firstName, lastName, email) VALUES ('Claire', 'Bretton', 'clbr@odoo.com');
