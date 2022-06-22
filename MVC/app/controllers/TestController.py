@@ -34,8 +34,8 @@ class ExampleController:
         if request.method == 'POST':
             if form.validate():
                 test = testService.insert(form)
-                return render_template('test/info.html', test=test)
+                return render_template('test/info.html', form=form, test=test)
             
-            return render_template('test/add.html', errors=form.errors)
+            return render_template('test/add.html', form=form, errors=form.errors)
 
-        return render_template('test/add.html', example="POST")
+        return render_template('test/add.html', example="POST", form=form)

@@ -7,7 +7,6 @@ class TestService:
         pass
 
     def findAll(self):
-        # cur = conn.cursor()
         with conn.cursor() as cur:
             cur.execute("SELECT * FROM test")
             tests = []
@@ -18,7 +17,6 @@ class TestService:
             return tests
 
     def findOne(self, testid):
-        # cur = conn.cursor()
         with conn.cursor() as cur:
             cur.execute(f"SELECT * FROM test WHERE testid = %s", (str(testid),))
             testData = cur.fetchone()
@@ -29,7 +27,6 @@ class TestService:
                 return None
 
     def findOneBy(self, **kwargs):
-        # cur = conn.cursor()
         with conn.cursor() as cur:
             query = "SELECT * FROM test"
             isFirst = True
@@ -48,9 +45,9 @@ class TestService:
                 return None
 
     def insert(self, data: TestForm):
-        # cur = conn.cursor()
         with conn.cursor() as  cur:
-            cur.execute("INSERT INTO test(testid, testtext) VALUES(" + str(data.testid.data) + ", '" + str(data.testtext.data) + "')")
+            cur.execute("INSERT INTO test(testid, testtext) VALUES(%s, %s)",
+                str(data.testid.data), str(data.testtext.data))
             conn.commit()
 
             return self.findOne(int(data.testid.data))
