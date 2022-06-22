@@ -15,14 +15,6 @@ class ContactService:
 
         return datas
 
-    def findOne(self, id):
-        cur = conn.cursor()
-        cur.execute(f"SELECT * FROM contacts WHERE id = {id};")
-        data = cur.fetchone()
-        conn.commit()
-
-        return Contact(data[0], data[1], data[2], data[3], data[4])
-
     def insert(self, data: ContactForm):
         cur = conn.cursor()
 
