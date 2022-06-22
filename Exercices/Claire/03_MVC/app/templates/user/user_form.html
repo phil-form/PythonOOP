@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User form</title>
+    </head>
+
+    <body>
+        <h1>Create new user:</h1>
+        {% if errors %}
+        <p>{{ errors }}</p>
+        {% endif %}
+        <form id="user" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input type="text" name="username" placeholder="username" required>
+            <input type="password" name="userpassword" placeholder="userpassword" required>
+            <input type="text" name="email" placeholder="email" required>
+            <input type="text" name="userdescription" placeholder="userdescription">
+            <input type="submit" value="Send">
+        </form>
+    </body>
+
+</html>
