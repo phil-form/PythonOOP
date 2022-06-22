@@ -8,10 +8,11 @@
 </head>
 <body>
     <form action="/register" method="post">
-        <input type="text" name="username" required="true">
-        <input type="text" name="password" required="true">
-        <input type="text" name="mail" required="true">
-        <input type="text" name="description" required="false">
+        {{csrf_token }}
+        Username: <input type="text" name="username" required="true"><br>
+        Password: <input type="text" name="password" required="true"><br>
+        mail: <input type="text" name="mail" required="true"><br>
+        description: <input type="text" name="description" required="false"><br>
         <input type="submit" value="Submit">
     </form>
 </body>
