@@ -45,9 +45,13 @@ class UserService:
 
     def insert(self, data: UserForm):
         with conn.cursor() as cur:
-            cur.execute("INSERT INTO users(username, userpassword, email, userdescription) VALUES('"
-                        + str(data.username.data) + "', '" + str(data.userpassword.data) + "', '"
-                        + str(data.email.data) + "', '" + str(data.userdescription.data) + "')")
+            query = "INSERT INTO users(username, userpassword, email, userdescription) VALUES(%(username)s, " \
+                    "%(userpassword)s, %(email)s, %(userdescription)s); "
+            values = {'username': data.username.data,
+                      "userpassword": data.userpassword.data,
+                      "email": data.email.data,
+                      "userdescription": data.userdescription.data}
+            cur.execute(query, values)
             conn.commit()
 
 
