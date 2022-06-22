@@ -26,8 +26,8 @@ class ContactService:
     def insert(self, data: ContactForm):
         cur = conn.cursor()
 
-        cur.execute('INSERT INTO contacts(firstname, lastname, email, password) VALUES(' + str(data.firstname.data) + ', ' + str(data.lastname.data) + ', ' + str(data.email.data) + str(data.password.data) + ');')
-        
+        cur.execute("INSERT INTO contacts(firstname, lastname, email, password) VALUES(%s, %s, %s, %s)",
+            (str(data.firstname.data), str(data.lastname.data), str(data.email.data), str(data.password.data)))
         conn.commit()
 
-        return None
+        return str(data.firstname.data) + ' ' + str(data.lastname.data)

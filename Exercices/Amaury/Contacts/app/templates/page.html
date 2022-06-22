@@ -16,9 +16,12 @@
             <input type="submit" value="Send">
         </form>
         <p>
+        {% if data %}
+            New contact added: {{ data }}
+        {% endif %}
         {% if datas %}
             {% for data in datas %}
-                Identity: {{ data.firstname }} {{ data.lastname }} | Contact: {{ data.email }}
+                Identity: {{ data.firstname }} {{ data.lastname }} | Contact: {{ data.email }} <br>
             {% endfor %}
         {% endif %}
         {% if errors %}
