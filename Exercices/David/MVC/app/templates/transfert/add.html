@@ -6,11 +6,14 @@
 
     <body>
         <h1>This is a beautiful page!!! {{ example }}</h1>
+
+        <p>{{ testHtml }}</p>
         
         <form id="contact" method="post">
             {{ form.csrf_token }}
-            <input type="text" name="testid" placeholder="id" required>
-            <input type="text" name="testtext" placeholder="text" required>
+            <input type="text" name="fromaccount" placeholder="fromaccount" required>
+            <input type="text" name="toaccount" placeholder="toaccount" required>
+            <input type="text" name="amount" placeholder="amount" required>
     
             <input type="submit" value="Send">
         </form>

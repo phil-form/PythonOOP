@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>First MVC</title>
+    </head>
+
+    <body>
+        {% for test in tests %}
+        <div>
+            <a href="/test/{{ test.testid }}">{{ test.testtext }}</a>
+        </div>
+        {% endfor %}
+    </body>
+</html>
