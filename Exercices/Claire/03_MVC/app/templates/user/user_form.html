@@ -10,7 +10,7 @@
         <p>{{ errors }}</p>
         {% endif %}
         <form id="user" method="post">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            {{ form.csrf_token }}
             <input type="text" name="username" placeholder="username" required>
             <input type="password" name="userpassword" placeholder="userpassword" required>
             <input type="text" name="email" placeholder="email" required>

@@ -22,10 +22,10 @@ class UserController:
     @app.route('/users/search', methods=['GET', 'POST'])
     def searchUser(username=None):
         user = None
+        form = SearchUserForm(request.form)
         if request.method == 'POST':
-            form = SearchUserForm(request.form)
             user = userService.findOneBy(username=form.username.data)
-        return render_template('user/user_search.html', user=user)
+        return render_template('user/user_search.html', user=user, form=form)
 
     @app.route('/users/add', methods=['GET', 'POST'])
     def insertUser():
@@ -36,4 +36,4 @@ class UserController:
                 userService.insert(form)
                 return redirect(url_for('getAllUsers'))
 
-        return render_template('user/user_form.html', errors=form.errors)
+        return render_template('user/user_form.html', errors=form.errors, form=form)
